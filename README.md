@@ -1,2 +1,3 @@
 # js-tenis-game
-Web browser game made with Javascript
+Web browser tenis game made with Javascript.
+This game is created based on Chris DeLeon's tutorial.
