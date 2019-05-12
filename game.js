@@ -7,7 +7,10 @@ var ballY = 50;
 var ballSpeedY = 4;
 
 var paddle1Y = 250;
+var paddle2Y = 250;
+
 const PADDLE_HEIGHT = 100;
+const PADDLE_THICKNESS = 10;
 
 window.onload = function() {
 
@@ -54,8 +57,11 @@ function draw() {
     colorRect( 0, 0, canvas.width, canvas.height, "black" );
     // ball
     colorCircle( ballX, ballY, 10, "white" );
+
     // left player paddle
-    colorRect( 0, paddle1Y, 10, PADDLE_HEIGHT, "white");
+    colorRect( 0, paddle1Y, PADDLE_THICKNESS, PADDLE_HEIGHT, "white");
+    // right player paddle
+    colorRect( canvas.width-PADDLE_THICKNESS, paddle2Y, PADDLE_THICKNESS, PADDLE_HEIGHT, "white");
 }
 
 function colorCircle(centerX, centerY, radius, drawColor) {
