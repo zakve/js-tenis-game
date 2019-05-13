@@ -114,6 +114,9 @@ function draw() {
         return;
     }
 
+    // net
+    drawNet();
+
     // ball
     colorCircle( ballX, ballY, 10, "white" );
 
@@ -125,6 +128,12 @@ function draw() {
     // score
     canvasContext.fillText(player1Score, 100, 100);
     canvasContext.fillText(player2Score, canvas.width-100, 100);
+}
+
+function drawNet() {
+    for (let i = 0; i < canvas.height; i+=40) {
+        colorRect( canvas.width/2-1, i, 2, 20, "white");
+    }
 }
 
 function colorCircle(centerX, centerY, radius, drawColor) {
