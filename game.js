@@ -50,6 +50,10 @@ function move() {
         // ballSpeedX = -ballSpeedX;
         if ( ballY > paddle1Y && ballY < paddle1Y+PADDLE_HEIGHT ) {
             ballSpeedX = -ballSpeedX;
+
+            // change speed based on hit angle the paddle
+            let deltaY = ballY-(paddle1Y+PADDLE_HEIGHT/2);
+            ballSpeedY = deltaY * 0.35;
         }
         else {
             ballReset();
@@ -59,6 +63,10 @@ function move() {
     if ( ballX > canvas.width ) {
         if ( ballY > paddle2Y && ballY < paddle2Y+PADDLE_HEIGHT ) {
             ballSpeedX = -ballSpeedX;
+
+            // change speed based on hit angle the paddle
+            let deltaY = ballY-(paddle2Y+PADDLE_HEIGHT/2);
+            ballSpeedY = deltaY * 0.35;
         }
         else {
             ballReset();
