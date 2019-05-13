@@ -8,6 +8,9 @@ var ballSpeedY = 4;
 
 var player1Score = 0;
 var player2Score = 0;
+const WINNING_SCORE = 3;
+
+var gameOver = false;
 
 var paddle1Y = 250;
 var paddle2Y = 500;
@@ -24,10 +27,20 @@ window.onload = function() {
     let fps = 60;
     setInterval( () => {move(),draw()}, 1000/fps );
 
-    canvas.addEventListener( 'mousemove', function( evt ) {
+    canvas.addEventListener( 'mousemove', ( evt ) => {
         let mousePos = calculateMousePos( evt );
         paddle1Y = mousePos.y-(PADDLE_HEIGHT/2);
-    } )
+    });
+
+    canvas.addEventListener( 'mousedown', handleMouseClick);
+}
+
+function handleMouseClick( evt ) {
+    if (gameOver) {
+        player1Score = 0;
+        player2Score = 0;
+        gameOver = false;
+    }
 }
 
 function computerMovement() {
@@ -41,6 +54,9 @@ function computerMovement() {
 }
 
 function move() {
+    if (gameOver) 
+        return;
+
     computerMovement();
 
     ballX += ballSpeedX;
@@ -56,8 +72,8 @@ function move() {
             ballSpeedY = deltaY * 0.35;
         }
         else {
-            ballReset();
             player2Score++;
+            ballReset();
         }
     }
     if ( ballX > canvas.width ) {
@@ -69,8 +85,8 @@ function move() {
             ballSpeedY = deltaY * 0.35;
         }
         else {
-            ballReset();
             player1Score++;
+            ballReset();
         }
     }
     if ( ballY < 0 ) {
@@ -84,6 +100,20 @@ function move() {
 function draw() {
     // black playground
     colorRect( 0, 0, canvas.width, canvas.height, "black" );
+
+    if (gameOver) {
+        canvasContext.fillStyle = "white";
+
+        if ( player1Score >= WINNING_SCORE ) {
+            canvasContext.fillText("Left player Won!", 350, 200);
+        } else if ( player2Score >= WINNING_SCORE ) {
+            canvasContext.fillText("Right player Won!", 350, 200);;
+        }
+
+        canvasContext.fillText("Click to continue", 350, 500);
+        return;
+    }
+
     // ball
     colorCircle( ballX, ballY, 10, "white" );
 
@@ -121,6 +151,10 @@ function calculateMousePos( evt ) {
 }
 
 function ballReset() {
+    if ( player1Score >= WINNING_SCORE || player2Score >= WINNING_SCORE ) {
+        gameOver = true;
+    }
+
     ballSpeedX = -ballSpeedX;
     ballX = canvas.width/2;
     ballY = canvas.height/2;
