@@ -27,7 +27,19 @@ window.onload = function() {
     } )
 }
 
+function computerMovement() {
+    let paddle2YCenter = paddle2Y + (PADDLE_HEIGHT / 2);
+    if ( paddle2YCenter < ballY-35 ) {
+        paddle2Y += 3;
+    }
+    else if ( paddle2YCenter > ballY+35 ) {
+        paddle2Y -= 3;
+    }
+}
+
 function move() {
+    computerMovement();
+
     ballX += ballSpeedX;
     ballY += ballSpeedY;
 
