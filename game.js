@@ -24,33 +24,13 @@ window.onload = function() {
     canvas = document.getElementById( "gameCanvas" );
     canvasContext = canvas.getContext( "2d" );
 
+    // main functionality - draw and move in every moment
     let fps = 60;
     setInterval( () => {move(),draw()}, 1000/fps );
 
-    canvas.addEventListener( 'mousemove', ( evt ) => {
-        let mousePos = calculateMousePos( evt );
-        paddle1Y = mousePos.y-(PADDLE_HEIGHT/2);
-    });
-
+    // handle mouse move for player paddle
+    canvas.addEventListener( 'mousemove', handleMouseMove);
     canvas.addEventListener( 'mousedown', handleMouseClick);
-}
-
-function handleMouseClick( evt ) {
-    if (gameOver) {
-        player1Score = 0;
-        player2Score = 0;
-        gameOver = false;
-    }
-}
-
-function computerMovement() {
-    let paddle2YCenter = paddle2Y + (PADDLE_HEIGHT / 2);
-    if ( paddle2YCenter < ballY-35 ) {
-        paddle2Y += 3;
-    }
-    else if ( paddle2YCenter > ballY+35 ) {
-        paddle2Y -= 3;
-    }
 }
 
 function move() {
@@ -63,7 +43,6 @@ function move() {
     ballY += ballSpeedY;
 
     if ( ballX < 0 ) {
-        // ballSpeedX = -ballSpeedX;
         if ( ballY > paddle1Y && ballY < paddle1Y+PADDLE_HEIGHT ) {
             ballSpeedX = -ballSpeedX;
 
@@ -157,6 +136,29 @@ function calculateMousePos( evt ) {
         x: mouseX,
         y: mouseY
     }
+}
+
+function computerMovement() {
+    let paddle2YCenter = paddle2Y + (PADDLE_HEIGHT / 2);
+    if ( paddle2YCenter < ballY-35 ) {
+        paddle2Y += 3;
+    }
+    else if ( paddle2YCenter > ballY+35 ) {
+        paddle2Y -= 3;
+    }
+}
+
+function handleMouseClick( evt ) {
+    if (gameOver) {
+        player1Score = 0;
+        player2Score = 0;
+        gameOver = false;
+    }
+}
+
+function handleMouseMove( evt ) {
+    let mousePos = calculateMousePos( evt );
+    paddle1Y = mousePos.y-(PADDLE_HEIGHT/2);
 }
 
 function ballReset() {
