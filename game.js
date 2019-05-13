@@ -7,7 +7,7 @@ var ballY = 50;
 var ballSpeedY = 4;
 
 var paddle1Y = 250;
-var paddle2Y = 250;
+var paddle2Y = 500;
 
 const PADDLE_HEIGHT = 100;
 const PADDLE_THICKNESS = 10;
@@ -41,8 +41,12 @@ function move() {
         }
     }
     if ( ballX > canvas.width ) {
-        ballSpeedX = -ballSpeedX;
-        // ballReset();
+        if ( ballY > paddle2Y && ballY < paddle2Y+PADDLE_HEIGHT ) {
+            ballSpeedX = -ballSpeedX;
+        }
+        else {
+            ballReset();
+        }
     }
     if ( ballY < 0 ) {
         ballSpeedY = -ballSpeedY;
